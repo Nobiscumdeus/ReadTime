@@ -1,5 +1,5 @@
 import { useState, useEffect ,useCallback} from 'react';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import {  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import axios from 'axios';
 import { getCurrentUser } from '../services/authService';
 
@@ -8,7 +8,7 @@ import { formatTimeAgo } from '../utils/date';
 import LogoutButton from './Logout';
 import { UsersQueryParams,UserListItem, UsersPaginatedResponse  } from '../types/user.types';
 import ErrorPage from './ErrorPage';
-import {User,DashboardData,SystemStats,SystemMetric,SystemLog} from '../types/dashboard';
+import {User,DashboardData} from '../types/dashboard';
 import UserDetailsModal from './UserDetailsModal';
 
 const API_URL=import.meta.env.VITE_APP_API_URL || 'https://readtime.onrender.com';
@@ -48,16 +48,7 @@ const AdminDashboard=()=> {
     sortBy: 'newest'
   });
   
-  //........................System Tabs States & Variables ------------------------------//
-  const [serverStats, setServerStats] = useState({
-    cpu: 0,
-    memory: 0,
-    dbSize: 0,
-    dbAvailable: 0
-  });
-  const [systemStats, setSystemStats] = useState<SystemMetric[]>([]);
-  const [systemLogs, setSystemLogs] = useState<SystemLog[]>([]);
-  const [loadingStats, setLoadingStats] = useState(true);
+ 
 
 
   // Colors for charts
@@ -249,131 +240,7 @@ const handleDeleteUser = async (userId: string) => {
 
 
 
-//.........................................System Statistics Section .................//
-  // Function to fetch system stats
-  const fetchSystemStats = async () => {
-    setLoadingStats(true);
-    setError(null);
-    
-    try {
-      const token = localStorage.getItem('token');
-      
-      if (!token) {
-        throw new Error('No authentication token found');
-      }
-      
-      // Fetch current server stats
-      const { data: statsData } = await axios.get<SystemStats>(
-        `${API_URL}/api/admin/system/stats`, 
-        { headers: { 'x-auth-token': token } }
-      );
-      
-      setServerStats({
-        cpu: statsData.cpu || 0,
-        memory: statsData.memory || 0,
-        dbSize: statsData.dbSize || 0,
-        dbAvailable: statsData.dbAvailable || 0
-      });
-      
-      // Fetch historical metrics
-      const { data: metricsData } = await axios.get<SystemMetric[]>(
-        `${API_URL}/api/admin/system/metrics`, 
-        { headers: { 'x-auth-token': token } }
-      );
-      
-      // Format the timestamps and prepare chart data
-      const formattedMetrics = metricsData.map(metric => ({
-        timestamp: new Date(metric.timestamp).toLocaleTimeString(),
-        cpu: metric.cpu,
-        memory: metric.memory,
-        requests: metric.requests
-      }));
-      
-      setSystemStats(formattedMetrics);
-      
-      // Fetch system logs
-      const { data: logsData } = await axios.get(
-        `${API_URL}/api/admin/system/logs`, 
-        { headers: { 'x-auth-token': token } }
-      );
-      
-      setSystemLogs(logsData);
-      
-    } catch (err) {
-      console.error('Error fetching system data:', err);
-      
-      if (axios.isAxiosError(err) && err.response?.status === 403) {
-        setError('You do not have permission to access system information');
-      } else if (axios.isAxiosError(err) && err.response?.status === 401) {
-        localStorage.removeItem('token');
-        window.location.href = '/login';
-      } else {
-        setError('Failed to load system data. Please try again.');
-      }
-    } finally {
-      setLoadingStats(false);
-    }
-  };
-
-  // Initial load
-  useEffect(() => {
-    
-    fetchSystemStats();
-    
-    // Optional: Set up auto-refresh every 30 seconds
-    const refreshInterval = setInterval(() => {
-      fetchSystemStats();
-    }, 30000);
-    
-    // Clean up interval on component unmount
-    return () => clearInterval(refreshInterval);
-  }, []);
-
-
-
-
 //........................................Utility functions .............................
-  
-  // Get color based on usage percentage
-  const getUsageColor = (percentage:number) => {
-    if (percentage < 50) return 'bg-green-500';
-    if (percentage < 80) return 'bg-yellow-500';
-    return 'bg-red-500';
-  };
-
-   // Get badge color based on log level
-   const getLogLevelBadge = (level:string) => {
-    switch (level.toLowerCase()) {
-      case 'info':
-        return 'bg-green-100 text-green-800';
-      case 'warn':
-      case 'warning':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'error':
-        return 'bg-red-100 text-red-800';
-      case 'debug':
-        return 'bg-blue-100 text-blue-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-
-   // Format date for display
-   const formatDate = (dateString:string | Date) => {
-    if (!dateString) return 'Unknown';
-    const date = new Date(dateString);
-    return date.toLocaleString();
-  };
-
-    // Format file size
-    const formatFileSize = (sizeInMB:number) => {
-      if (sizeInMB < 1000) {
-        return `${sizeInMB.toFixed(1)} MB`;
-      } else {
-        return `${(sizeInMB / 1024).toFixed(1)} GB`;
-      }
-    };
 
 ///////////////////////////////////////End of utility functions ////////////////////////////////////////
     
@@ -999,129 +866,6 @@ if(showErrorPage){
 
     
 
-      {activeTab === 'system' && (
-
-
-
-<div>
-<div className="flex justify-between items-center mb-4">
-  <h2 className="text-xl font-semibold">System Performance</h2>
-  <button 
-    onClick={fetchSystemStats}
-    disabled={loadingStats}
-    className={`px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 ${
-      loadingStats ? 'opacity-50 cursor-not-allowed' : ''
-    }`}
-  >
-    {loadingStats ? 'Loading...' : 'Refresh Data'}
-  </button>
-</div>
-
-{/* Server Stats */}
-<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-  <div className="bg-white p-4 rounded-lg shadow">
-    <div className="text-sm text-gray-500">Server CPU Usage</div>
-    <div className="text-2xl font-bold">{serverStats.cpu}%</div>
-    <div className="mt-2 h-2 w-full bg-gray-200 rounded">
-      <div 
-        className={`h-full ${getUsageColor(serverStats.cpu)} rounded`} 
-        style={{ width: `${Math.min(serverStats.cpu, 100)}%` }}
-      ></div>
-    </div>
-  </div>
-  <div className="bg-white p-4 rounded-lg shadow">
-    <div className="text-sm text-gray-500">Memory Usage</div>
-    <div className="text-2xl font-bold">{serverStats.memory}%</div>
-    <div className="mt-2 h-2 w-full bg-gray-200 rounded">
-      <div 
-        className={`h-full ${getUsageColor(serverStats.memory)} rounded`} 
-        style={{ width: `${Math.min(serverStats.memory, 100)}%` }}
-      ></div>
-    </div>
-  </div>
-  <div className="bg-white p-4 rounded-lg shadow">
-    <div className="text-sm text-gray-500">Database Size</div>
-    <div className="text-2xl font-bold">{formatFileSize(serverStats.dbSize)}</div>
-    <div className="text-xs text-gray-500 mt-1">
-      {formatFileSize(serverStats.dbAvailable)} available
-    </div>
-  </div>
-</div>
-
-{/* Performance Chart */}
-<div className="bg-white p-4 rounded-lg shadow mb-6">
-  <h3 className="font-medium mb-4">Real-time Server Metrics</h3>
-  {systemStats.length === 0 ? (
-    <div className="h-64 flex items-center justify-center text-gray-500">
-      No metrics data available
-    </div>
-  ) : (
-    <div className="h-64">
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={systemStats}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="timestamp" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="cpu" stroke="#22c55e" name="CPU %" />
-          <Line type="monotone" dataKey="memory" stroke="#eab308" name="Memory %" />
-          <Line type="monotone" dataKey="requests" stroke="#3b82f6" name="Requests/min" />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
-  )}
-</div>
-
-{/* Log Table */}
-<div className="bg-white p-4 rounded-lg shadow">
-  <h3 className="font-medium mb-4">System Logs</h3>
-  <div className="overflow-x-auto">
-    <table className="min-w-full divide-y divide-gray-200">
-      <thead className="bg-gray-50">
-        <tr>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Level</th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
-        </tr>
-      </thead>
-      <tbody className="bg-white divide-y divide-gray-200">
-        {systemLogs.length === 0 ? (
-          <tr>
-            <td colSpan={3} className="px-6 py-4 text-center text-sm text-gray-500">
-              No logs available
-            </td>
-          </tr>
-        ) : (
-          systemLogs.map((log, index) => (
-            <tr key={index}>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {formatDate(log.timestamp)}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getLogLevelBadge(log.level)}`}>
-                  {log.level}
-                </span>
-              </td>
-              <td className="px-6 py-4 text-sm text-gray-500">{log.message}</td>
-            </tr>
-          ))
-        )}
-      </tbody>
-    </table>
-  </div>
-</div>
-</div>
-
-
-
-
-
-
-
-
-      )}
-
 
 
 
@@ -1129,7 +873,7 @@ if(showErrorPage){
 
       {/* Footer */}
       <div className="mt-8 pt-4 border-t text-center text-sm text-gray-500">
-        <p>Reading Tracker Admin Panel © {new Date().getFullYear()}</p>
+        <p>ReadTime Admin Panel © {new Date().getFullYear()}</p>
         <p className="mt-1">Version 1.2.3</p>
       </div>
     </div>

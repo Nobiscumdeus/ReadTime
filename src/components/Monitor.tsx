@@ -67,7 +67,7 @@ function Monitor() {
       });
 
       // Save the new entry
-      const response = await axios.post('${API_URL}/api/data/save', { date, hours },
+      const response = await axios.post(`${API_URL}/api/data/save`, { date, hours },
         { headers: { 'x-auth-token': localStorage.getItem('token') } }
       );
       console.log(response.data);
