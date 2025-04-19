@@ -62,7 +62,7 @@ const Landing: React.FC = () => {
           <div className="relative">
             <div className="absolute -top-6 -left-6 w-64 h-64 bg-indigo-200 rounded-full opacity-30"></div>
             <img 
-              src="/src/assets/reading_tracker_window.jpg" 
+              src="./assets/reading_tracker_window.jpg" 
               alt="Reading time tracking dashboard preview" 
               className="relative z-10 rounded-lg shadow-xl"
             />
@@ -148,7 +148,7 @@ const Landing: React.FC = () => {
               <div className="relative">
                 <div className="absolute -bottom-6 -right-6 w-64 h-64 bg-indigo-200 rounded-full opacity-30"></div>
                 <img 
-                  src="/src/assets/reading_tracker_ai_prediction.jpg" 
+                  src="./assets/reading_tracker_ai_prediction.jpg" 
                   alt="Student using ReadTime app" 
                   className="relative z-10 rounded-lg shadow-xl"
                 />
