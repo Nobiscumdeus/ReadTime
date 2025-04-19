@@ -4,3 +4,6 @@ Pipfile.lock
 /Pipfile.lock
 .env
 *.env
+
+.env.development 
+*.env.development

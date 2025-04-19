@@ -16,7 +16,7 @@ app = FastAPI(title="Reading Tracker AI API")
 # CORS Configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:5173"],  # Allow frontend origin
+    allow_origins=["http://localhost:3000", "http://localhost:5173","https://read-time-beige.vercel.app/","https://read-time-beige.vercel.app","https://readtime.onrender.com","https://readtime.onrender.com/"],  # Allow frontend origin
     #allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

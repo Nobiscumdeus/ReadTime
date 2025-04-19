@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: python-ai
+    runtime: python
+    buildCommand: |
+      pip install pipenv
+      pipenv install --deploy --system
+    startCommand: |
+      gunicorn -w 4 -k uvicorn.workers.UvicornWorker home:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
