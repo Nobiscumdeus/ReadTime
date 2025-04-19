@@ -294,18 +294,8 @@ if(showErrorPage){
         >
           User Management
         </button>
-        <button 
-          onClick={() => setActiveTab('system')}
-          className={`px-4 py-2 font-medium ${activeTab === 'system' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
-        >
-          System Performance
-        </button>
-        <button 
-          onClick={() => setActiveTab('settings')}
-          className={`px-4 py-2 font-medium ${activeTab === 'settings' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500'}`}
-        >
-          Settings
-        </button>
+  
+     
       </div>
 
       {/* Tab Content */}
