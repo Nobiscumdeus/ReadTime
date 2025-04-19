@@ -314,9 +314,27 @@ const Login: React.FC = () => {
     }
   };
 
+  /*
   const isVerificationError = (error: any): error is VerificationError => {
     return error?.isVerificationError === true;
   };
+  */
+  const isVerificationError = (error: unknown): error is VerificationError => {
+    return (
+      typeof error === 'object' &&
+      error !== null &&
+      'isVerificationError' in error &&
+      error.isVerificationError === true &&  // Type-safe check
+      'message' in error &&
+      'email' in error
+    );
+  };
+
+
+
+
+
+
 
   if (needsVerification.show) {
     return (

@@ -2,35 +2,19 @@
 import axios from 'axios';
 
 const API_URL=import.meta.env.VITE_APP_API_URL;
+import { UserData ,RegisterData,LoginData} from '../types/auth';
 
-
-// Types
-
-export interface RegisterData {
-  name: string;
-  email: string;
-  password: string;
-}
-
-export interface LoginData {
-  email: string;
-  password: string;
-}
-
-export interface UserData {
-  id: string;
-  name: string;
-  email: string;
-  isVerified: boolean;
-}
 
 export interface AuthResponse {
-  success: boolean;
-  message: string;
-  token?: string;
-  data?: UserData;
-}
-
+    success: boolean;
+    message?: string;  // Optional if not always present
+    token?: string;
+    user: {           // Matches your backend response
+      isAdmin: boolean;
+      // Add other properties your frontend uses
+      // (Only include what you actually need)
+    };
+  }
 export interface VerificationError {
     isVerificationError: true;
     message: string;
@@ -138,7 +122,7 @@ export const resendVerification = async (email: string): Promise<void> => {
     }
   };
 
-  
+
 // Login users - now checks for verified emails
 /*
 export const login = async (userData: LoginData): Promise<AuthResponse> => {
