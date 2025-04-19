@@ -1,0 +1,6 @@
+Pipfile.lock 
+*Pipfile.lock
+
+/Pipfile.lock
+.env
+*.env
