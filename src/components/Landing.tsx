@@ -4,6 +4,7 @@ import React, { useState ,useEffect} from 'react';
 import Login from './Login';
 import Register from './Register';
 
+import image1 from '../assets/reading_tracker_window.jpg'
 
 const Landing: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
@@ -62,7 +63,9 @@ const Landing: React.FC = () => {
           <div className="relative">
             <div className="absolute -top-6 -left-6 w-64 h-64 bg-indigo-200 rounded-full opacity-30"></div>
             <img 
-              src="/assets/reading_tracker_window.jpg" 
+              //src="/assets/reading_tracker_window.jpg" 
+              src={image1}
+             
               alt="Reading time tracking dashboard preview" 
               className="relative z-10 rounded-lg shadow-xl"
             />
