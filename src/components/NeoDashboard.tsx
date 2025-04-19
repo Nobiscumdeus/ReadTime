@@ -11,7 +11,7 @@ import ErrorPage from './ErrorPage';
 import {User,DashboardData,SystemStats,SystemMetric,SystemLog} from '../types/dashboard';
 import UserDetailsModal from './UserDetailsModal';
 
-const API_URL=import.meta.env.VITE_APP_API_URL;
+const API_URL=import.meta.env.VITE_APP_API_URL || 'https://readtime.onrender.com';
 
 //........................................
 

@@ -6,7 +6,7 @@ import {
 import { Reading,Props } from '../types/userReadingChart';
 
 
-const API_URL=import.meta.env.VITE_APP_API_URL;
+const API_URL=import.meta.env.VITE_APP_API_URL || 'https://readtime.onrender.com';
 
 const UserReadingChart = ({ userId }: Props) => {
   const [readings, setReadings] = useState<Reading[]>([]);

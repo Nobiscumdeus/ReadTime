@@ -9,7 +9,7 @@ import LogoutButton from './Logout';
 import AIInsights from './MonitorAI';
 import {User,ReadingItem,ReadingResponse,Insight,WeeklyData,ChartDataPoint} from '../types/monitor'
 
-const API_URL=import.meta.env.VITE_APP_API_URL;
+const API_URL=import.meta.env.VITE_APP_API_URL || 'https://readtime.onrender.com';
 
 function Monitor() {
   const [user, setUser] = useState<User | null>(null);

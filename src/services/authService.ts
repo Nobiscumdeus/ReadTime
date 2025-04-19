@@ -1,7 +1,7 @@
 // src/services/authService.ts
 import axios from 'axios';
 
-const API_URL=import.meta.env.VITE_APP_API_URL;
+const API_URL=import.meta.env.VITE_APP_API_URL|| 'https://readtime.onrender.com';
 import { UserData ,RegisterData,LoginData} from '../types/auth';
 
 

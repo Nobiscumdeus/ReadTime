@@ -4,7 +4,7 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, L
 import React from 'react';
 import { ReadingData,ChartDataItem,MonthDataItem,Insight,GoalPrediction,TooltipProps,AIInsightsProps } from '../types/monitorAI';
 
-const API_URL=import.meta.env.VITE_APP_API_URL;
+const API_URL=import.meta.env.VITE_APP_API_URL || 'https://readtime.onrender.com';
 
 function AIInsights({ month }: AIInsightsProps): React.JSX.Element {
   const [insights, setInsights] = useState<Insight[]>([]);

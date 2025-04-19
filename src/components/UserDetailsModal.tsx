@@ -5,7 +5,7 @@ import { AxiosError } from 'axios';
 
 import {UserDetails} from '../types/userDetailsModal'
 
-const API_URL=import.meta.env.VITE_APP_API_URL;
+const API_URL=import.meta.env.VITE_APP_API_URL || 'https://readtime.onrender.com';
 
 const UserDetailsModal = ({ userId, onClose }: { userId: string | null, onClose: () => void }) => {
   const [user, setUser] = useState<UserDetails | null>(null);
