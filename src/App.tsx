@@ -9,7 +9,10 @@ import { AuthProvider} from './contexts/AuthContext';
 import AdminDashboard from './components/NeoDashboard';
 
 
+
 import { isAuthenticated } from './services/authServiceBefore';
+import VerifyEmail from './components/VerifyEmail';
+import ResendVerification from './components/ResendVerification';
 /*
 // Simple auth check - replace with your actual auth logic
 const isAuthenticated = (): boolean => {
@@ -56,6 +59,8 @@ const App: React.FC = () => {
         */}
          
           <Route path="/admin_dashboard" element={<AdminDashboard />} />
+          <Route path="/verify-email" element={<VerifyEmail/>} />
+          <Route path="/resend-verification" element={<ResendVerification/>} />
         <Route path="*" element={<Navigate to="/" />} />
         
     
