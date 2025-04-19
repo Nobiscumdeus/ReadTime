@@ -5,6 +5,8 @@ import Login from './Login';
 import Register from './Register';
 
 import image1 from '../assets/reading_tracker_window.jpg'
+import image2 from '../assets/reading_tracker_ai_prediction.jpg'
+
 
 const Landing: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
@@ -151,8 +153,9 @@ const Landing: React.FC = () => {
               <div className="relative">
                 <div className="absolute -bottom-6 -right-6 w-64 h-64 bg-indigo-200 rounded-full opacity-30"></div>
                 <img 
-                 // src="assets/reading_tracker_ai_prediction.jpg" 
-                 src="/public/reading_tracker_ai_prediction.jpg"
+              
+                 src={image2}
+
                   alt="Student using ReadTime app" 
                   className="relative z-10 rounded-lg shadow-xl"
                 />
