@@ -6,7 +6,8 @@ const User = require('../models/User.model');
 require('dotenv').config();
 
 // Any other models you need
-const AI_SERVICE_URL = process.env.AI_SERVICE_URL||'http://localhost:8000';
+//const AI_SERVICE_URL = process.env.AI_SERVICE_URL||'http://localhost:8000';
+const AI_SERVICE_URL=process.env.AI_SERVICE_URL || 'https://readtimeai.onrender.com:8000' || 'https://readtimeai.onrender.com'
 
 exports.analyzeReadings = async (req, res) => {
   try {
