@@ -97,7 +97,7 @@ const UserDetailsModal = ({ userId, onClose }: { userId: string | null, onClose:
                   <h3 className="font-semibold text-blue-800 mb-2">User Info</h3>
                   <p className="truncate"><span className="font-medium">Name:</span> {user.name}</p>
                   <p className="truncate"><span className="font-medium">Email:</span> {user.email}</p>
-                  <p className="truncate"><span className="font-medium">Verification Status:</span> {user.isVerified}</p>
+                  <p className="truncate"><span className="font-medium">Verification Status:</span>   {user.isVerified ? "✓ Verified" : "✗ Not yet Verified"}</p>
                   <p><span className="font-medium">Joined:</span> {user.formattedJoinDate}</p>
                 </div>
 
