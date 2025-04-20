@@ -56,7 +56,7 @@ function AIInsights({ month }: AIInsightsProps): React.JSX.Element {
       }
   
       const analysisResponse = await axios.post<{ insights: Insight[] }>(
-        '${API_URL}/api/ai/analyze',
+        `${API_URL}/api/ai/analyze`,
         {
           month: month,
           readings: readings // Already in correct format from backend
