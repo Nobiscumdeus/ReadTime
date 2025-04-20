@@ -20,4 +20,5 @@ export interface UserDetails {
   averageHours: string;
   formattedJoinDate: string;
   formattedLastActive: string;
+  isVerified:boolean;
 }

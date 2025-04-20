@@ -87,13 +87,28 @@ const UserDetailsModal = ({ userId, onClose }: { userId: string | null, onClose:
           {user && !loading && !error && (
             <div className="mt-6 space-y-6">
               {/* User Summary */}
+
+
+
+
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-blue-50 p-4 rounded-lg">
                   <h3 className="font-semibold text-blue-800 mb-2">User Info</h3>
                   <p className="truncate"><span className="font-medium">Name:</span> {user.name}</p>
                   <p className="truncate"><span className="font-medium">Email:</span> {user.email}</p>
+                  <p className="truncate"><span className="font-medium">Verification Status:</span> {user.isVerified}</p>
                   <p><span className="font-medium">Joined:</span> {user.formattedJoinDate}</p>
                 </div>
+
+
+
+
+
+
+
+
+
 
                 <div className="bg-green-50 p-4 rounded-lg">
                   <h3 className="font-semibold text-green-800 mb-2">Reading Stats</h3>
