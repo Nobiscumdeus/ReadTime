@@ -262,7 +262,7 @@ const prepareChartData = useCallback((data: MonthDataItem[]): void => {
   
       // Make API call
       const predictionResponse = await axios.post<GoalPrediction>(
-        '${API_URL}/api/ai/predict-goal',
+        `${API_URL}/api/ai/predict-goal`,
         {
           target_hours: Number(targetHours),
           month_data: readings.filter(r => !isNaN(r.hours)) // Clean data
