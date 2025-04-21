@@ -3,7 +3,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Landing from './components/Landing';
 
-
 import Monitor from './components/Monitor';
 import { AuthProvider} from './contexts/AuthContext';
 import AdminDashboard from './components/NeoDashboard';
@@ -13,6 +12,7 @@ import AdminDashboard from './components/NeoDashboard';
 import { isAuthenticated } from './services/authServiceBefore';
 import VerifyEmail from './components/VerifyEmail';
 import ResendVerification from './components/ResendVerification';
+
 /*
 // Simple auth check - replace with your actual auth logic
 const isAuthenticated = (): boolean => {
@@ -31,7 +31,7 @@ const App: React.FC = () => {
     <AuthProvider>
        <Router>
       <Routes>
-        <Route path="/" element={<Landing />} />
+      <Route path="/" element={<Landing />} />
         <Route 
           path="/monitor" 
           element={<ProtectedRoute element={<Monitor />} />} 
@@ -61,7 +61,9 @@ const App: React.FC = () => {
           <Route path="/admin_dashboard" element={<AdminDashboard />} />
           <Route path="/verify-email" element={<VerifyEmail/>} />
           <Route path="/resend-verification" element={<ResendVerification/>} />
+   
         <Route path="*" element={<Navigate to="/" />} />
+       
         
     
         
